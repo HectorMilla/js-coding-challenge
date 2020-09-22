@@ -24,7 +24,7 @@
     
     const question1 = new QuestionConstructor('What is 12 x 12?', ['0: 233', '1: 100', '2: 144'], 2);
     const question2 = new QuestionConstructor('In what year did the US get its independence?', ['0: 1800', '1: 1776', '2: 1920'], 1);
-    const question3 = new QuestionConstructor('How many parts Oxygen is water of?', ['0: 1', '1: 2', '2: 3'], 0);
+    const question3 = new QuestionConstructor('How many parts Oxygen is water made of?', ['0: 1', '1: 2', '2: 3'], 0);
     const question4 = new QuestionConstructor('How many feet are in a mile?', ['0: 2580', '1: 5280', '2: 3000'], 1);
     
     
@@ -38,17 +38,27 @@
          let questionNumber = Math.floor(Math.random() * 4)
          arr[questionNumber].ask()   
          promptQuestion(arr[questionNumber].question,arr[questionNumber].correctAnswer)
-         
+        
     }
     
     // function that will prompt a question and check if the answer is correct // 
-    const promptQuestion = function (question, response) {
-        let answer = prompt(question);
-        if( answer === response) {
+    const promptQuestion = function (question, answer) {
+        let response = prompt(question);
+        if( answer == response) {
             console.log('You got the correct answer!!');
-        } else {
+        } else  {
             console.log("Your answer was incorect :(");
         }
+        
+       continueGame(response)
     }
-    askQuestion(allQuestions)
+
+    const continueGame = function (response) {
+        if (response == 'exit') {
+            console.log("You have exited the game");
+        } else {
+          askQuestion(allQuestions)
+        }
+    }
+   askQuestion(allQuestions)
 })();
