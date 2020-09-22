@@ -19,6 +19,13 @@
             }
     
     }
+    QuestionConstructor.prototype.checkAnswer = function(ans) {
+        if (ans == this.correctAnswer) {
+            console.log('You got the correct answer!!');  
+        } else if (ans !== this.correctAnswer && response !== 'exit') {
+            console.log("You have chosen the wrong answer :(");
+        }       
+    }
     
     // created new questions using constructor //
     
@@ -31,34 +38,30 @@
     // created array with all of the question objects //
     
     let allQuestions = [question1, question2, question3, question4]
-    
-    
+
     // function that will select a random question to ask //
-    const askQuestion = function (arr) {
+    const playGame = function (arr) {
          let questionNumber = Math.floor(Math.random() * 4)
          arr[questionNumber].ask()   
-         promptQuestion(arr[questionNumber].question,arr[questionNumber].correctAnswer)
-        
+        let response =promptQuestion('Please select the correct answer or type exit to end game',arr[questionNumber].question,arr[questionNumber].correctAnswer, )
+        continueGame(response)
     }
     
-    // function that will prompt a question and check if the answer is correct // 
-    const promptQuestion = function (question, answer) {
-        let response = prompt(question);
-        if( answer == response) {
-            console.log('You got the correct answer!!');
-        } else  {
-            console.log("Your answer was incorect :(");
-        }
-        
-       continueGame(response)
-    }
-
+    // function that will continue asking question unless user respons with exit // 
     const continueGame = function (response) {
         if (response == 'exit') {
             console.log("You have exited the game");
         } else {
-          askQuestion(allQuestions)
+          playGame(allQuestions)
         }
     }
-   askQuestion(allQuestions)
+
+
+    playGame(allQuestions)
 })();
+
+
+// let game = function () {
+//     askQuestion(allQuestions)
+
+// }
