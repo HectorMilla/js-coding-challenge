@@ -19,14 +19,35 @@
             }
     
     }
-    QuestionConstructor.prototype.checkAnswer = function(ans) {
+    // Prototype that will check if the ans given is correct
+    QuestionConstructor.prototype.checkAnswer = function(ans, callback) {
+        let sc;
         if (ans == this.correctAnswer) {
-            console.log('You got the correct answer!!');  
-        } else if (ans !== this.correctAnswer && response !== 'exit') {
+      
+            console.log('You got the correct answer!!'); 
+            sc = callback(true) 
+        } else if (ans !== this.correctAnswer && ans !== 'exit') {
             console.log("You have chosen the wrong answer :(");
-        }       
+            sc = callback(false)
+        }     
+        this.displayScore(sc)
     }
-    
+    // Prototype that will display score 
+    QuestionConstructor.prototype.displayScore = function(score) {
+        console.log('Your current score is: ' + score);
+        console.log('------------------------------');
+    }
+    function score () {
+        let sc = 0;
+        return function (correct) {
+            if (correct) {
+                sc++
+            }
+            return sc
+        }.
+    }
+
+    keepScore = score();
     // created new questions using constructor //
     
     const question1 = new QuestionConstructor('What is 12 x 12?', ['0: 233', '1: 100', '2: 144'], 2);
@@ -42,19 +63,21 @@
     // function that will select a random question to ask //
     const playGame = function (arr) {
          let questionNumber = Math.floor(Math.random() * 4)
+
          arr[questionNumber].ask()   
-        let response =promptQuestion('Please select the correct answer or type exit to end game',arr[questionNumber].question,arr[questionNumber].correctAnswer, )
-        continueGame(response)
+
+         let response = prompt("Please select the correct answer or repond with exit to quit game")
+         
+         if (response !== 'exit') {
+            arr[questionNumber].checkAnswer(response, keepScore)
+            playGame(allQuestions)
+        } else {
+            console.log('you have exited the game');
+        }
+        
+ 
     }
     
-    // function that will continue asking question unless user respons with exit // 
-    const continueGame = function (response) {
-        if (response == 'exit') {
-            console.log("You have exited the game");
-        } else {
-          playGame(allQuestions)
-        }
-    }
 
 
     playGame(allQuestions)
